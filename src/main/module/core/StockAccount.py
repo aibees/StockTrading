@@ -6,7 +6,8 @@ from module.core.Request import process
 class StockAccount :
     def __init__(self):
         self.modules = Init()
-        self.util = self.modules.getUtil()
+        self.util = self.modules.getAccAgnt()
+        self.util.TradeInit(0)
         self.Td6033 = self.modules.getTd6033()
         self.accNum = self.util.AccountNumber[0] # 계좌번호
         self.flag = self.util.GoodsList(self.accNum, 1) # 주식상품 구분

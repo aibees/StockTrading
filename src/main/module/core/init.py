@@ -19,7 +19,6 @@ class Init:
             self.initStock()
             self.initManager()
             self.initTd6033()
-            self.initUtil()
 
     def initAccount(self):
         self.agnt_Acc = win32com.client.Dispatch("CpTrade.CpTdUtil")
@@ -36,10 +35,6 @@ class Init:
         print("initManager")
         self.agnt_Mng = win32com.client.Dispatch('CpUtil.CpCodeMgr')
 
-    def initUtil(self):
-        print("initUtil")
-        self.agnt_Util = win32com.client.Dispatch('CpTrade.CpTdUtil')
-
     def initTd6033(self):
         print("initTd6033")
         self.agnt_Td6033 = win32com.client.Dispatch("CpTrade.CpTd6033")
@@ -55,9 +50,6 @@ class Init:
 
     def getMngAgnt(self):
         return self.agnt_Mng
-
-    def getUtil(self):
-        return self.agnt_Util
 
     def getTd6033(self):
         return self.agnt_Td6033
