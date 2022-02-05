@@ -38,6 +38,7 @@ class Job_Account:
         for data in result:
             data['last_update'] = datetime.now()
             data['own_yn'] = 'Y' # 현 계좌에 있는 데이터 옮기니 소유값 하드코딩해도 무방
+            print(data)
             # 기존데이터 조회
             prev_data = self.__trans.SelectByCode(data['stockId'])
             # master
@@ -58,3 +59,5 @@ class Job_Account:
                 self.__trans.UpdateMaster(data)
                 # insert new detail
                 self.__trans.InsertDetail(data)
+
+            print("DB update complete")

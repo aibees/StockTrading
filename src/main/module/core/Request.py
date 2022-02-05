@@ -13,10 +13,7 @@ class CpEvent:
         self.caller = caller  # callback 을 위해 보관
  
     def OnReceived(self):
-        # 실시간 처리 - 현재가 주문 체결
-        # if self.name == 'stockmst':
-        #     win32event.SetEvent(StopEvent)
-        #     return
+        # self.caller.updateData(self.client)
         
         win32event.SetEvent(StopEvent)
         return
@@ -45,10 +42,6 @@ def MessagePump(timeout):
             break
  
         elif rc == win32event.WAIT_OBJECT_0 + len(waitables):
-            # A windows message is waiting - take care of it. (Don't ask me
-            # why a WAIT_OBJECT_MSG isn't defined < WAIT_OBJECT_0...!).
-            # This message-serving MUST be done for COM, DDE, and other
-            # Windowsy things to work properly!
             if pythoncom.PumpWaitingMessages():
                 break  # we received a wm_quit message
         elif rc == win32event.WAIT_TIMEOUT:

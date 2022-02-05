@@ -14,30 +14,25 @@ class Init:
         if not hasattr(cls, "_init"):  # Foo 클래스 객체에 _init 속성이 없다면
             print("__init__ is called\n")
             cls._init = True
-            self.initAccount()
-            self.initTrade()
-            self.initStock()
-            self.initManager()
-            self.initTd6033()
+            self.initModule()
 
-    def initAccount(self):
+    def initModule(self):
         self.agnt_Acc = win32com.client.Dispatch("CpTrade.CpTdUtil")
 
-    def initTrade(self):
         print("initTrade")
         self.agnt_Trade = win32com.client.Dispatch("CpTrade.CpTd6033")
 
-    def initStock(self):
         print("initStock")
         self.agnt_Stock = win32com.client.Dispatch("DsCbo1.StockMst")
 
-    def initManager(self):
         print("initManager")
         self.agnt_Mng = win32com.client.Dispatch('CpUtil.CpCodeMgr')
 
-    def initTd6033(self):
         print("initTd6033")
         self.agnt_Td6033 = win32com.client.Dispatch("CpTrade.CpTd6033")
+
+        print("initChart")
+        self.agnt_Chart = win32com.client.Dispatch("CpSysDib.StockChart")
 
     def getAccAgnt(self):
         return self.agnt_Acc
@@ -53,3 +48,6 @@ class Init:
 
     def getTd6033(self):
         return self.agnt_Td6033
+
+    def getChart(self):
+        return self.agnt_Chart

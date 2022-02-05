@@ -16,6 +16,9 @@ def start_test():
     print("start : batchDaemon Test")
     sched = BatchScheduler()
     sched.start()
+    sched.addCronJob("Job_Account")
+    while(True):
+        time.sleep(1000)
 
 
 def process():
