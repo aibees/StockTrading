@@ -3,7 +3,7 @@ from module.core.init import Init
 from module.core.Request import process
 
 
-class StockAccount :
+class StockAccount:
     def __init__(self):
         self.modules = Init()
         self.util = self.modules.getAccAgnt()
@@ -15,17 +15,18 @@ class StockAccount :
         # 처음 init에서 계좌잔고와 정보 load
         # 이후에는 체결 이후나 필요할 시 update 하는 방식
     
-    def getAccountInfo(self) :
+    def getAccountInfo(self):
         return self.account
     
     def callAccountInfo(self) :
         # param : 계좌번호, flag, 최대요청건수
+        order = []
         param = [self.accNum, self.flag[0], 10]
-        result_obj = process(param, self.Td6033)
+        result_obj = process(param, self.Td6033, self)
         
         cnt = result_obj.GetHeaderValue(7) # 결과 건수
         result = []
-        for i in range(cnt) :
+        for i in range(cnt):
             item = {}
             code = result_obj.GetDataValue(12, i) #종목코드
             item['stockId'] = code
