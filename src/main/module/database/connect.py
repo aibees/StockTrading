@@ -31,8 +31,10 @@ class Mysql:
 
     def __fetch(self, query, params):
         cursor = self.conn.cursor()
-        cursor.execute(query, params)
-
+        if params is not None:
+            cursor.execute(query, params)
+        else:
+            cursor.execute(query)
         res = cursor.fetchall()  # fetchall : 조건에 맞는 모든 데이터 / fetchone : 조건에 맞는 데이터 중 1개
         return res
 
