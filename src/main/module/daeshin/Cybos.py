@@ -4,6 +4,8 @@ import time
 import win32com.client
 from pywinauto import application
 
+from .account.Account import Account
+
 class Cybos:
     def __init__(self):
         self.obj_CpUtil_CpCodeMgr = win32com.client.Dispatch('CpUtil.CpCodeMgr')
@@ -13,8 +15,9 @@ class Cybos:
         self.obj_CpTrade_CpTdUtil = win32com.client.Dispatch('CpTrade.CpTdUtil')
         self.obj_CpSysDib_MarketEye = win32com.client.Dispatch('CpSysDib.MarketEye')
         self.obj_CpUtil_CpCybos = win32com.client.Dispatch('CpUtil.CpCybos')
+        self.obj_CpTrade_CpTd6033 = win32com.client.Dispatch("CpTrade.CpTd6033")
 
-    def connect(self, id_, pwd, pwdcert, trycnt=300):
+    def connect(self, id_, pwd, pwdcert, trycnt=10):
         if not self.connected():
             self.disconnect()
             # self.kill_client()
@@ -118,7 +121,7 @@ class Cybos:
                     dict_item[k] = int(dict_item[k])
 
                 # additional fields
-                dict_item['diffratio'] = (dict_item['diff'] / (dict_item['close'] - dict_item['diff'])) * 100
+                dict_item['diffratio'] = round((dict_item['diff'] / (dict_item['close'] - dict_item['diff']) * 100), 3)
                 dict_item['code'] = code
                 dict_item['name'] = self.obj_CpUtil_CpCodeMgr.CodeToName(code)
                 list_item.append(dict_item)
@@ -136,3 +139,8 @@ class Cybos:
             else:
                 break
         return result
+    
+    
+    def getAccountList(self):
+        Acc = Account()
+        return Acc.getAccountList(self.obj_CpTrade_CpTdUtil, self.obj_CpTrade_CpTd6033, self.avoid_reqlimitwarning)

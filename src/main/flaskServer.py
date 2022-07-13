@@ -42,6 +42,14 @@ def handle_stockcandles():
     stockcandles = c.get_chart(stockcode, target='A', unit='D', n=n, date_from=date_from, date_to=date_to)
     return jsonify(stockcandles)
 
+@app.route('/account', methods=['GET'])
+def show_current_stock():
+    c = Cybos()
+    c.avoid_reqlimitwarning()
+    return jsonify(c.getAccountList())
+
+
+
 if __name__ == "__main__":
     app.run()
 
